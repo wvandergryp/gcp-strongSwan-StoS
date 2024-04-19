@@ -1,4 +1,4 @@
-# Troubshooting tips
+# Troubleshooting tips
 #
 # The dos2unix.exe command is commonly used to convert text files from DOS/Windows 
 # format (which uses carriage return and line feed characters, \r\n) to Unix/Linux format 
