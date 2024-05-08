@@ -39,7 +39,7 @@ resource "google_compute_address" "external_ip_vm2" {
 
 resource "google_compute_instance" "vm1" {
   name         = "vm1"
-  machine_type = "e2-medium"
+  machine_type = "e2-micro"
   zone         = "us-central1-c"
   metadata_startup_script = templatefile("${path.module}/vm1-startup-script.sh", {
     PSK           = "ChangeMe@1"
