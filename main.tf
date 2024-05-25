@@ -24,22 +24,6 @@ provider "google" {
   zone    = "us-central1-c"
 }
 
-variable "gcp_project" {
-   description = "The ID of the project in which resources will be managed."
-   type        = string
-   default = "vpn-test02"
-}
-
-variable "subnet_cidr_vpc1_sub1" {
-  description = "CIDR range for the subnet"
-  default     = "10.0.1.0/24"
-}
-
-variable "subnet_cidr_vpc2_sub1" {
-  description = "CIDR range for the subnet"
-  default     = "10.0.2.0/24"
-}
-
 # External IP addresses for VM1
 resource "google_compute_address" "external_ip_vm1" {
   name        = "external-ip-vm1"
@@ -217,8 +201,12 @@ resource "google_compute_firewall" "ssh-vpc1" {
   network = google_compute_network.my_vpc1.name
 
   allow {
+    protocol = "icmp"
+  }
+  
+  allow {
     protocol = "tcp"
-    ports    = ["22"]
+    ports    = ["22",]
   }
 
   source_ranges = [var.subnet_cidr_vpc1_sub1, var.subnet_cidr_vpc2_sub1]
@@ -228,6 +216,10 @@ resource "google_compute_firewall" "ssh-vpc1" {
 resource "google_compute_firewall" "ssh-vpc2" {
   name    = "ssh-vpc2"
   network = google_compute_network.my_vpc2.name
+
+  allow {
+    protocol = "icmp"
+  }
 
   allow {
     protocol = "tcp"
